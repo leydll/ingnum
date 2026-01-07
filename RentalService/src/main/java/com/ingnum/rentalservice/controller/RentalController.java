@@ -3,17 +3,19 @@ package com.ingnum.rentalservice.controller;
 import com.ingnum.rentalservice.service.NameServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class BonjourController {
+public class RentalController {
 
     @Autowired
     private NameServiceClient nameServiceClient;
 
-    @GetMapping("/bonjour")
-    public String bonjour() {
-        String name = nameServiceClient.getName();
-        return "bonjour " + name;
+    @GetMapping("/customer/{name}")
+    public String getCustomer(@PathVariable String name) {
+        NameServiceClient.CustomerInfo customerInfo = nameServiceClient.getCustomerInfo(name);
+        return "Client: " + customerInfo.getName();
     }
 }
+
